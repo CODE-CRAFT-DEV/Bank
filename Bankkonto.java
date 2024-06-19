@@ -1,12 +1,10 @@
 package uebung_2024_06_18_exceptions.Aufgabe_4;
 
-import java.util.InputMismatchException;
-
 public class Bankkonto {
     // Attribute festlegen
-    private final int kontonummer;
+    private int kontonummer;
     private double kontostand;
-    private final String waehrung;
+    private String waehrung;
 
     /**
      * Konstruktor der ein Bankkonto erstellt und einen Anfangsbestand und Währung deklariert
@@ -26,6 +24,8 @@ public class Bankkonto {
     }
 
     public double getKontostand() {
+        int temp = (int)kontostand * 100;
+        kontostand = (double) temp / 100;
         return kontostand;
     }
 
@@ -37,7 +37,7 @@ public class Bankkonto {
      * Methode zum Einzahlen auf das Konto, erwartet den Betrag als Eingabe
      * @param einzahlung
      */
-    public void Einzahlen(double einzahlung) {
+    public void einzahlen(double einzahlung) {
         kontostand += einzahlung;
     }
 
@@ -46,9 +46,9 @@ public class Bankkonto {
      * wenn Konto nicht gedeckt ist
      * @param auszahlung
      */
-    public void Abheben(double auszahlung) {
+    public void auszahlen(double auszahlung) throws KontoNichtGedecktException {
         if (kontostand < auszahlung) {
-            throw new InputMismatchException("Nicht genügend Geld auf dem Konto");
+            throw new KontoNichtGedecktException("Zu wenig Guthaben auf dem Konto!");
         }
         kontostand -= auszahlung;
     }
@@ -57,7 +57,7 @@ public class Bankkonto {
      * Methode um den Kontostand anzeigen zu lassen
      */
     public void zeigeKontostand() {
-        System.out.println("Kontostand: " + kontostand + " " + waehrung);
+        System.out.println("Kontonummer: " + getKontonummer() + " " + "Kontostand: " + kontostand + " " + waehrung);
     }
 }
 
